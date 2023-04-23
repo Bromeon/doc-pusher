@@ -34,7 +34,7 @@ jobs:
           HEREDOC
           )
           echo "VAR=$payload"
-          echo "GDEXT_JSON=$payload" >> $GITHUB_ENV
+          echo "GDEXT_JSON<<HEREDOC${payload}HEREDOC" >> $GITHUB_ENV
 
 
 #      - name: "Construct JSON using jq"
