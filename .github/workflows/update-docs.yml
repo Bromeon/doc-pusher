@@ -1,0 +1,52 @@
+name: PR workflow
+
+on:
+  pull_request:
+
+jobs:
+
+  notify-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v3
+
+      - name: "Debug"
+        run: |
+          echo "PR number: ${{ github.event.number }}"
+          echo "PR title: ${{ github.event.pull_request.title }}"
+          echo "PR author: ${{ github.event.pull_request.user.login }}"
+          echo "Last commit SHA: ${{ github.event.pull_request.head.sha }}"
+          echo "Last commit timestamp: ${{ github.event.pull_request.updated_at }}"
+
+      - name: "Construct JSON"
+        run: |
+          payload=$(cat <<'HEREDOC'
+          {
+            "op": "put",
+            "repo": "gdext",
+            "num": "${{ github.event.number }}",
+            "commit-sha": "${{ github.event.pull_request.head.sha }}",
+            "date": "${{ github.event.pull_request.updated_at }}",
+            "pr-author": "${{ github.event.pull_request.user.login }}",
+            "pr-title": "${{ github.event.pull_request.title }}"
+          }
+          HEREDOC
+          )
+          echo "VAR=$payload"
+          echo "GDEXT_JSON<<HEREDOC" >> $GITHUB_ENV
+          echo "${payload}" >> $GITHUB_ENV
+          echo "HEREDOC" >> $GITHUB_ENV
+
+      - name: "Debug"
+        run: |
+          echo "GDEXT_JSON: $GDEXT_JSON"
+
+      - name: "Notify doc workflow"
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.PAT }}
+          repository: Bromeon/bromeon.github.io
+          event-type: 'Generate docs'
+          client-payload: ${{ env.GDEXT_JSON }}
+
