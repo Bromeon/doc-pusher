@@ -34,7 +34,9 @@ jobs:
           HEREDOC
           )
           echo "VAR=$payload"
-          echo "GDEXT_JSON<<HEREDOC ${payload} HEREDOC" >> $GITHUB_ENV
+          echo "GDEXT_JSON<<HEREDOC" >> $GITHUB_ENV
+          echo "${payload}" >> $GITHUB_ENV
+          echo "HEREDOC" >> $GITHUB_ENV
 
       - name: "Debug"
         run: |
