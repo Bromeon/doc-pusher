@@ -21,15 +21,18 @@ jobs:
 
       - name: "Construct JSON"
         run: |
-          read -r -d '' payload <<HEREDOC
+          payload=$(cat <<'HEREDOC'
           {
             "op": "put",
             "repo": "gdext",
             "num": "${{ github.event.number }}",
             "commit-sha": "${{ github.event.pull_request.head.sha }}",
-            "date": "${{ github.event.pull_request.updated_at }}"
+            "date": "${{ github.event.pull_request.updated_at }}",
+            "pr-author": "${{ github.event.pull_request.user.login }}",
+            "pr-title": "${{ github.event.pull_request.title }}"
           }
           HEREDOC
+          )
           echo "GDEXT_JSON=$payload" >> $GITHUB_ENV
         
 
