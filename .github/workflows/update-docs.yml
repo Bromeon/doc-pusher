@@ -42,26 +42,11 @@ jobs:
         run: |
           echo "GDEXT_JSON: $GDEXT_JSON"
 
-#      - name: "Construct JSON using jq"
-#        run: |
-#            payload=$(jq -n \
-#                --arg op "put" \
-#                --arg repo "gdext" \
-#                --arg num "${{ github.event.number }}" \
-#                --arg commit_sha "${{ github.event.pull_request.head.sha }}" \
-#                --arg date "${{ github.event.pull_request.updated_at }}" \
-#                --arg pr_author "${{ github.event.pull_request.user.login }}" \
-#                --arg pr_title "${{ github.event.pull_request.title }}" \
-#                '{op: $op, repo: $repo, num: $num, commit_sha: $commit_sha, date: $date, pr_author: $pr_author, pr_title: $pr_title}'
-#            )
-#            echo "GDEXT_JSON=$payload" >> $GITHUB_ENV
-
-#      - name: "Notify doc workflow"
-#        uses: peter-evans/repository-dispatch@v2
-#        with:
-#          token: ${{ secrets.PAT }}
-#          repository: Bromeon/bromeon.github.io
-#          event-type: 'Generate docs'
-#            # Same as above, but in YAML instead of JSON
-#            client-payload:
+      - name: "Notify doc workflow"
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.PAT }}
+          repository: Bromeon/bromeon.github.io
+          event-type: 'Generate docs'
+          client-payload: ${{ env.GDEXT_JSON }}
 
