@@ -1,0 +1,21 @@
+[package]
+name = "itest"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.66"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[features]
+default = []
+trace = ["godot/trace"]
+double-precision = ["godot/double-precision"]
+
+[dependencies]
+godot = { path = "../../godot", default-features = false, features = ["formatted"] }
+
+[build-dependencies]
+quote = "1"
+proc-macro2 = "1"

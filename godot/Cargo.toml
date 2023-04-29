@@ -1,0 +1,22 @@
+[package]
+name = "godot"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.66"
+license = "MPL-2.0"
+keywords = ["gamedev", "godot", "engine", "2d", "3d"] # possibly: "ffi"
+categories = ["game-engines", "graphics"]
+
+[features]
+default = ["codegen-full"]
+formatted = ["godot-core/codegen-fmt"]
+double-precision = ["godot-core/double-precision"]
+custom-godot = ["godot-core/custom-godot"]
+
+# Private features, they are under no stability guarantee
+codegen-full = ["godot-core/codegen-full"]
+trace = ["godot-core/trace"]
+
+[dependencies]
+godot-core = { path = "../godot-core" }
+godot-macros = { path = "../godot-macros" }

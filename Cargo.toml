@@ -1,0 +1,13 @@
+[workspace]
+members = [
+    "godot-bindings",
+    "godot-codegen",
+    "godot-ffi",
+    "godot-core",
+    "godot-macros",
+    "godot",
+
+    # Godot integration
+    "itest/rust",
+    "examples/dodge-the-creeps/rust"
+]

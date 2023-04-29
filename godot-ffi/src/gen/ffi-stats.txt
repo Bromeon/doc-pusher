@@ -1,0 +1,9 @@
+       delete_gen_dir:    6 ms
+       write_header_h:    1 ms
+      write_header_rs:    0 ms
+     deserialize_json:  648 ms
+        build_context:   96 ms
+generate_central_file:  110 ms
+              rustfmt:  465 ms
+------------------------------
+                total: 1329 ms

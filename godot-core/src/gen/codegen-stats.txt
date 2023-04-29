@@ -1,0 +1,9 @@
+            deserialize_json:   652 ms
+               build_context:   116 ms
+       generate_central_file:   117 ms
+     generate_utilities_file:    85 ms
+        generate_class_files: 24905 ms
+generate_builtin_class_files:   781 ms
+                     rustfmt: 59944 ms
+--------------------------------------
+                       total: 86604 ms

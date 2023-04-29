@@ -1,0 +1,19 @@
+[package]
+name = "godot-ffi"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.66"
+license = "MPL-2.0"
+keywords = ["gamedev", "godot", "engine", "ffi"]
+categories = ["game-engines", "graphics"]
+
+[features]
+custom-godot = ["godot-bindings/custom-godot"]
+codegen-fmt = ["godot-codegen/codegen-fmt"]
+
+[dependencies]
+paste = "1"
+
+[build-dependencies]
+godot-bindings = { path = "../godot-bindings" }
+godot-codegen = { path = "../godot-codegen" }
