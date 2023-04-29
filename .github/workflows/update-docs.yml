@@ -2,6 +2,8 @@ name: PR workflow
 
 on:
   pull_request:
+  push:
+    branches: [master]
 
 jobs:
 
@@ -20,6 +22,8 @@ jobs:
           echo "Last commit timestamp: ${{ github.event.pull_request.updated_at }}"
 
       - name: "Construct JSON"
+        # run only when triggered by a PR
+        if: github.event_name == 'pull_request'
         run: |
           payload=$(cat <<'HEREDOC'
           {
@@ -30,6 +34,27 @@ jobs:
             "date": "${{ github.event.pull_request.updated_at }}",
             "pr-author": "${{ github.event.pull_request.user.login }}",
             "pr-title": "${{ github.event.pull_request.title }}"
+          }
+          HEREDOC
+          )
+          echo "VAR=$payload"
+          echo "GDEXT_JSON<<HEREDOC" >> $GITHUB_ENV
+          echo "${payload}" >> $GITHUB_ENV
+          echo "HEREDOC" >> $GITHUB_ENV
+
+      # if pushed to master, get commit-sha, date, author and title
+      - name: "Construct JSON for master"
+        if: github.ref == 'refs/heads/master'
+        run: |
+          payload=$(cat <<'HEREDOC'
+          {
+            "op": "put",
+            "repo": "gdext",
+            "num": "master",
+            "commit-sha": "${{ github.sha }}",
+            "date": "${{ github.event.head_commit.timestamp }}",
+            "pr-author": "${{ github.event.head_commit.author.login }}",
+            "pr-title": "${{ github.event.head_commit.message }}"
           }
           HEREDOC
           )
