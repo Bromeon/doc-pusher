@@ -26,7 +26,7 @@ pub struct Aabb {
 
 impl Aabb {
 
-    fn new_fun() {
+    pub fn loloid_func() {
 
     }
 
