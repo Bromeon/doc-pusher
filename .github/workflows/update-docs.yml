@@ -21,8 +21,8 @@ jobs:
           echo "Last commit SHA: ${{ github.event.pull_request.head.sha }}"
           echo "Last commit timestamp: ${{ github.event.pull_request.updated_at }}"
 
-      - name: "Construct JSON (triggered by PR)"
-        if: github.event_name == 'pull_request'
+      - name: "Construct JSON (for PR sync)"
+        if: github.event_name == 'pull_request' && github.event.action != 'closed'
         run: |
           payload=$(cat <<'HEREDOC'
           {
@@ -33,6 +33,22 @@ jobs:
             "date": "${{ github.event.pull_request.updated_at }}",
             "pr-author": "${{ github.event.pull_request.user.login }}",
             "pr-title": "${{ github.event.pull_request.title }}"
+          }
+          HEREDOC)
+          echo "VAR=$payload"
+          echo "GDEXT_JSON<<HEREDOC" >> $GITHUB_ENV
+          echo "${payload}" >> $GITHUB_ENV
+          echo "HEREDOC" >> $GITHUB_ENV
+
+      # if PR is closed, delete the entry
+      - name: "Construct JSON (for closed PR)"
+        if: github.event_name == 'pull_request' && github.event.action == 'closed'
+        run: |
+          payload=$(cat <<'HEREDOC'
+          {
+              "op": "delete",
+              "repo": "gdext",
+              "num": "${{ github.event.number }}"
           }
           HEREDOC)
           echo "VAR=$payload"
