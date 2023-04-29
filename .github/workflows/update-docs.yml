@@ -21,8 +21,7 @@ jobs:
           echo "Last commit SHA: ${{ github.event.pull_request.head.sha }}"
           echo "Last commit timestamp: ${{ github.event.pull_request.updated_at }}"
 
-      - name: "Construct JSON"
-        # run only when triggered by a PR
+      - name: "Construct JSON (triggered by PR)"
         if: github.event_name == 'pull_request'
         run: |
           payload=$(cat <<'HEREDOC'
@@ -35,15 +34,14 @@ jobs:
             "pr-author": "${{ github.event.pull_request.user.login }}",
             "pr-title": "${{ github.event.pull_request.title }}"
           }
-          HEREDOC
-          )
+          HEREDOC)
           echo "VAR=$payload"
           echo "GDEXT_JSON<<HEREDOC" >> $GITHUB_ENV
           echo "${payload}" >> $GITHUB_ENV
           echo "HEREDOC" >> $GITHUB_ENV
 
       # if pushed to master, get commit-sha, date, author and title
-      - name: "Construct JSON for master"
+      - name: "Construct JSON (for master)"
         if: github.ref == 'refs/heads/master'
         run: |
           payload=$(cat <<'HEREDOC'
@@ -54,8 +52,7 @@ jobs:
             "commit-sha": "${{ github.sha }}",
             "date": "${{ github.event.head_commit.timestamp }}"
           }
-          HEREDOC
-          )
+          HEREDOC)
           echo "VAR=$payload"
           echo "GDEXT_JSON<<HEREDOC" >> $GITHUB_ENV
           echo "${payload}" >> $GITHUB_ENV
