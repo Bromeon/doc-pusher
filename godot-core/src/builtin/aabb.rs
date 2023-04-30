@@ -33,6 +33,9 @@ impl Aabb {
         Self { position, size }
     }
 
+    /// SOME CONSTANT
+    pub const FROM_PR_3: u16 = 0xDEAD;
+
     /// Create a new `Aabb` with the first corner at `position` and opposite corner at `end`.
     #[inline]
     pub fn from_corners(position: Vector3, end: Vector3) -> Self {
