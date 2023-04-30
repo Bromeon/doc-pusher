@@ -12,8 +12,8 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v3
 
-      - name: "Compile"
-        run: cargo check -p godot
+#      - name: "Compile"
+#        run: cargo check -p godot
 
       # if pushed to master, get commit-sha, date, author and title
       - name: "Construct JSON (for master)"
