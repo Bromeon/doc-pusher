@@ -26,8 +26,8 @@ pub struct Aabb {
 
 impl Aabb {
 
-    pub fn loloid_func() {
-
+    pub fn loloid_func() -> i32 {
+        77
     }
 
     /// Create a new `Aabb` from a position and a size.
