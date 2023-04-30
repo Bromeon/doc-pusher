@@ -6,20 +6,32 @@ on:
     branches: [master]
 
 jobs:
-
   notify-docs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout"
         uses: actions/checkout@v3
 
-      - name: "Debug"
+      - name: "Compile"
+        run: cargo check -p godot
+
+      # if pushed to master, get commit-sha, date, author and title
+      - name: "Construct JSON (for master)"
+        if: github.ref == 'refs/heads/master'
         run: |
-          echo "PR number: ${{ github.event.number }}"
-          echo "PR title: ${{ github.event.pull_request.title }}"
-          echo "PR author: ${{ github.event.pull_request.user.login }}"
-          echo "Last commit SHA: ${{ github.event.pull_request.head.sha }}"
-          echo "Last commit timestamp: ${{ github.event.pull_request.updated_at }}"
+          payload=$(cat <<'HEREDOC'
+          {
+            "op": "put",
+            "repo": "gdext",
+            "num": "master",
+            "commit-sha": "${{ github.sha }}",
+            "date": "${{ github.event.head_commit.timestamp }}"
+          }
+          HEREDOC)
+          echo "VAR=$payload"
+          echo "GDEXT_JSON<<HEREDOC" >> $GITHUB_ENV
+          echo "${payload}" >> $GITHUB_ENV
+          echo "HEREDOC" >> $GITHUB_ENV
 
       - name: "Construct JSON (for PR sync)"
         if: github.event_name == 'pull_request' && github.event.action != 'closed'
@@ -56,27 +68,9 @@ jobs:
           echo "${payload}" >> $GITHUB_ENV
           echo "HEREDOC" >> $GITHUB_ENV
 
-      # if pushed to master, get commit-sha, date, author and title
-      - name: "Construct JSON (for master)"
-        if: github.ref == 'refs/heads/master'
+      - name: "Print payload"
         run: |
-          payload=$(cat <<'HEREDOC'
-          {
-            "op": "put",
-            "repo": "gdext",
-            "num": "master",
-            "commit-sha": "${{ github.sha }}",
-            "date": "${{ github.event.head_commit.timestamp }}"
-          }
-          HEREDOC)
-          echo "VAR=$payload"
-          echo "GDEXT_JSON<<HEREDOC" >> $GITHUB_ENV
-          echo "${payload}" >> $GITHUB_ENV
-          echo "HEREDOC" >> $GITHUB_ENV
-
-      - name: "Debug"
-        run: |
-          echo "GDEXT_JSON: $GDEXT_JSON"
+          echo "$GDEXT_JSON"
 
       - name: "Notify doc workflow"
         uses: peter-evans/repository-dispatch@v2
