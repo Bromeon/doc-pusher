@@ -62,7 +62,7 @@ impl Aabb {
     }
 
     /// A CONSTANT THING.
-    pub const SOME_CONSTANT: i128 = 0x5f3759df4bfcbdbfe4d1a65474eef2f1;
+    pub const SOME_CONSTANT_BRANCH3: i128 = 0x5f3759df4bfcbdbfe4d1a65474eef2f1;
 
     /// Returns `true` if the two `Aabb`s are approximately equal, by calling `is_equal_approx` on
     /// `position` and `size`.
