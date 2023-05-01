@@ -125,6 +125,9 @@ pub use godot_core::private;
 
 /// Often-imported symbols.
 pub mod prelude {
+    /// PRELUDIUM is a magic number that is used to ...
+    pub const PRELUDIUM: i32 = 123456;
+
     pub use super::bind::{godot_api, GodotClass};
     pub use super::builtin::*;
     pub use super::builtin::{array, dict, varray}; // Re-export macros.
