@@ -34,6 +34,10 @@ impl Aabb {
         77
     }
 
+    pub fn loloid_variant2() -> i32 {
+        77
+    }
+
     /// Create a new `Aabb` from a position and a size.
     ///
     /// _Godot equivalent: `Aabb(Vector3 position, Vector3 size)`_
