@@ -66,6 +66,7 @@ impl Aabb {
 
     pub const FIRST_CONST: i8 = 4;
     pub const SECOND_CONST: i8 = 6;
+    pub const THIRD_CONST: i8 = 8;
 
     /// Returns `true` if the two `Aabb`s are approximately equal, by calling `is_equal_approx` on
     /// `position` and `size`.
