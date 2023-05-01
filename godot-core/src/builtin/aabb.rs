@@ -25,7 +25,7 @@ pub struct Aabb {
 }
 
 impl Aabb {
-
+    /// Some loloid.
     pub fn loloid_func() -> i32 {
         77
     }
