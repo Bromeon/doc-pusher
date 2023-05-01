@@ -30,10 +30,6 @@ impl Aabb {
         77
     }
 
-    pub fn loloid_variant() -> i32 {
-        77
-    }
-
     pub fn loloid_variant2() -> i32 {
         77
     }
