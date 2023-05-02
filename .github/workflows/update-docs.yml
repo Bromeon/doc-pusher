@@ -65,7 +65,8 @@ jobs:
           {
               "op": "delete",
               "repo": "gdext",
-              "num": "${{ github.event.number }}"
+              "num": "${{ github.event.number }}",
+              "date": "${{ github.event.pull_request.updated_at }}"
           }
           HEREDOC)
           echo "VAR=$payload"
