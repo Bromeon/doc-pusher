@@ -33,6 +33,9 @@ impl Aabb {
         Self { position, size }
     }
 
+    /// SOME CONSTANT
+    pub const FROM_PR_3: u16 = 0xDEAD;
+
     /// Create a new `Aabb` with the first corner at `position` and opposite corner at `end`.
     #[inline]
     pub fn from_corners(position: Vector3, end: Vector3) -> Self {
@@ -57,6 +60,13 @@ impl Aabb {
     pub fn set_end(&mut self, end: Vector3) {
         self.size = end - self.position
     }
+
+    /// A CONSTANT THING.
+    pub const SOME_CONSTANT_BRANCH3: i128 = 0x5f3759df4bfcbdbfe4d1a65474eef2f1;
+
+    pub const FIRST_CONST: i8 = 4;
+    pub const SECOND_CONST: i8 = 6;
+    pub const THIRD_CONST: i8 = 8;
 
     /// Returns `true` if the two `Aabb`s are approximately equal, by calling `is_equal_approx` on
     /// `position` and `size`.
