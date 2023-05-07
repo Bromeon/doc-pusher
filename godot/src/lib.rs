@@ -141,4 +141,7 @@ pub mod prelude {
     // Make trait methods available
     pub use super::engine::NodeExt as _;
     pub use super::obj::EngineEnum as _;
+
+    /// 5
+    pub const FIVER : usize = 5;
 }
