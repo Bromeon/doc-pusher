@@ -142,3 +142,7 @@ pub mod prelude {
     pub use super::engine::NodeExt as _;
     pub use super::obj::EngineEnum as _;
 }
+
+pub mod newsym {
+    pub struct Test {}
+}
